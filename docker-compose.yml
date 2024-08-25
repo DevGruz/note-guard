@@ -9,8 +9,6 @@ services:
       - note-guard-db
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app
     networks:
       - app-network
 
@@ -23,8 +21,6 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
     networks:
       - app-network
 
@@ -45,5 +41,3 @@ networks:
   app-network:
 
 
-volumes:
-  pgdata:
