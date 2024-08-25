@@ -3,8 +3,9 @@ version: "3.8"
 services:
   note-guard-app:
     build:
+      context: .
       dockerfile: Dockerfile
-    container_name: app-note-guard
+    container_name: note-guard-app
     depends_on:
       - note-guard-db
     ports:
@@ -14,6 +15,7 @@ services:
 
   note-guard-db:
     image: postgres:13
+    container_name: note-guard-db
     restart: always
     env_file:
       - .env
@@ -27,9 +29,12 @@ services:
   note-guard-pgadmin:
     image: dpage/pgadmin4
     container_name: note-guard-pgadmin
+    logging:
+      driver: none 
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
+      GUNICORN_ACCESS_LOGFILE: '/dev/null'
     ports:
       - "80:80"
     depends_on:
