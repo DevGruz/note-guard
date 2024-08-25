@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  note-guard-app:
+    build:
+      dockerfile: Dockerfile
+    container_name: app-note-guard
+    depends_on:
+      - note-guard-db
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    networks:
+      - app-network
+
+  note-guard-db:
+    image: postgres:13
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  note-guard-pgadmin:
+    image: dpage/pgadmin4
+    container_name: note-guard-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "80:80"
+    depends_on:
+      - note-guard-db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+
+volumes:
+  pgdata:
