@@ -159,5 +159,5 @@ cd fastapi-note-service
 
 ## Лицензия
 
-Этот проект лицензирован под MIT License - подробности см. в файле [LICENSE](https://choosealicense.com/licenses/mit/).
+Этот проект лицензирован под MIT License - подробности см. в файле [LICENSE](https://github.com/DevGruz/note-guard/blob/main/LICENSE).
 
