@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 
 from app.api.main import api_router
 
@@ -9,3 +10,9 @@ app = FastAPI(
 )
 
 app.include_router(api_router)
+
+
+@app.get("/favicon.ico")
+async def favicon():
+    external_favicon_url = "https://raw.githubusercontent.com/DevGruz/note-guard/7fde4c3e9525ef87f5aca05101d13ea82972a4f0/img/favicon.svg"
+    return RedirectResponse(url=external_favicon_url)

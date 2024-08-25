@@ -4,7 +4,7 @@
 Этот проект представляет собой сервис для создания и управления заметками, реализованный на FastAPI. Сервис поддерживает добавление заметок, вывод списка заметок и валидацию орфографических ошибок с использованием Яндекс.Спеллера. Также реализована аутентификация и авторизация, чтобы пользователи имели доступ только к своим заметкам.
 
 
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+![Logo](https://raw.githubusercontent.com/DevGruz/note-guard/7fde4c3e9525ef87f5aca05101d13ea82972a4f0/img/logo.svg)
 
 
 ## Функциональные возможности
@@ -159,5 +159,5 @@ cd fastapi-note-service
 
 ## Лицензия
 
-Этот проект лицензирован под [MIT License](https://choosealicense.com/licenses/mit/)
+Этот проект лицензирован под MIT License - подробности см. в файле [LICENSE](https://choosealicense.com/licenses/mit/).
 
