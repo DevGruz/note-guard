@@ -21,10 +21,10 @@ class NoteNotFoundError(NoteException):
 
 class SpellingErrorException(NoteException):
     status_code = status.HTTP_400_BAD_REQUEST
-    detail = {"msg": "There are spelling errors in the text"}
 
     def __init__(self, detail: dict | None = None):
         if detail is None:
             detail = {}
+        self.detail = {"msg": "There are spelling errors in the text"}
         self.detail.update(detail)
         super().__init__()

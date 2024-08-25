@@ -48,9 +48,12 @@ async def update_note(
     note_data: NoteUpdateSchema,
     user: UserModel = Depends(current_active_user),
     note_service: NoteService = Depends(get_note_service),
+    fix_errors: FixErrorsOption = Query(
+        default=FixErrorsOption.NO_FIX, description="Choose error handling strategy"
+    ),
 ) -> NoteReadSchema:
     note = await note_service.update_note_by_id(
-        note_id=note_id, note_data=note_data, user_id=user.id
+        note_id=note_id, note_data=note_data, user_id=user.id, fix_errors=fix_errors
     )
     return note
 

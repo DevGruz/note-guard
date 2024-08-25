@@ -1,5 +1,6 @@
 import uuid
 from enum import Enum
+from typing import Union
 
 from app.exceptions import NoteAccessDeniedException, SpellingErrorException
 from app.schemas import NoteCreateSchema, NoteReadSchema, NoteUpdateSchema
@@ -34,12 +35,11 @@ class NoteService:
 
         return errors
 
-    async def add_note(
+    async def _process_spelling_errors(
         self,
-        note_data: NoteCreateSchema,
-        user_id: uuid.UUID,
-        fix_errors: FixErrorsOption = FixErrorsOption.NO_FIX,
-    ) -> NoteReadSchema:
+        note_data: Union[NoteCreateSchema, NoteUpdateSchema],
+        fix_errors: FixErrorsOption,
+    ) -> Union[NoteCreateSchema, NoteUpdateSchema]:
         if fix_errors == FixErrorsOption.NOTIFY:
             errors = await self._check_spelling_note(
                 title=note_data.title, content=note_data.content
@@ -54,6 +54,16 @@ class NoteService:
             )
             note_data.title = corrected_texts[0] or note_data.title
             note_data.content = corrected_texts[1] or note_data.content
+
+        return note_data
+
+    async def add_note(
+        self,
+        note_data: NoteCreateSchema,
+        user_id: uuid.UUID,
+        fix_errors: FixErrorsOption = FixErrorsOption.NO_FIX,
+    ) -> NoteReadSchema:
+        note_data = await self._process_spelling_errors(note_data, fix_errors)
 
         note_model = await self.repository.add_one(
             **note_data.model_dump(), user_id=user_id
@@ -89,7 +99,9 @@ class NoteService:
         note_id: int,
         note_data: NoteUpdateSchema,
         user_id: uuid.UUID,
+        fix_errors: FixErrorsOption = FixErrorsOption.NO_FIX,
     ) -> NoteReadSchema:
+        note_data = await self._process_spelling_errors(note_data, fix_errors)
         note_model = await self.repository.update_one(
             note_id=note_id, user_id=user_id, **note_data.model_dump(exclude_none=True)
         )
