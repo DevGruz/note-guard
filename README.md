@@ -20,8 +20,8 @@
 #### 1. Клонирование репозитория
 
 ```bash
-git clone https://github.com/yourusername/fastapi-note-service.git
-cd fastapi-note-service
+git clone https://github.com/DevGruz/note-guard.git
+cd note-guard
 ```
     
 #### 2. Настройка окружения
